@@ -1,3 +1,3 @@
-module github.com/stratoberry/go-gpsd
+module github.com/pfcrumpler/go-gpsd
 
 go 1.18
