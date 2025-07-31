@@ -2,6 +2,7 @@ package gpsd
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -206,6 +207,12 @@ type Satellite struct {
 // Dial opens a new connection to GPSD.
 func Dial(address string) (*Session, error) {
 	return dialCommon(net.Dial("tcp4", address))
+}
+
+// DialContext opens a new connection to GPSD with a context.
+func DialContext(ctx context.Context, address string) (*Session, error) {
+	var d net.Dialer
+	return dialCommon(d.DialContext(ctx, "tcp4", address))
 }
 
 // DialTimeout opens a new connection to GPSD with a timeout.
