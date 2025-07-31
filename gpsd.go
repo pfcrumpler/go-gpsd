@@ -306,7 +306,7 @@ func watch(done chan bool, s *Session) {
 				if report, err2 := unmarshalReport(reportPeek.Class, lineBytes); err2 == nil {
 					s.deliverReport(reportPeek.Class, report)
 				} else {
-					fmt.Println("JSON parsing error 2:", err)
+					fmt.Println("JSON parsing error 2:", err2)
 				}
 			} else {
 				fmt.Println("JSON parsing error:", err)
