@@ -37,13 +37,21 @@ const (
 	Mode3D Mode = 3
 )
 
+type Classy interface {
+	GetClass() string
+}
+
 type gpsdReport struct {
 	Class string `json:"class"`
 }
 
+func (r *gpsdReport) GetClass() string {
+	return r.Class
+}
+
 // TPVReport is a Time-Position-Velocity report
 type TPVReport struct {
-	Class  string    `json:"class"`
+	gpsdReport
 	Tag    string    `json:"tag"`
 	Device string    `json:"device"`
 	Mode   Mode      `json:"mode"`
@@ -66,7 +74,7 @@ type TPVReport struct {
 
 // SKYReport reports sky view of GPS satellites
 type SKYReport struct {
-	Class      string      `json:"class"`
+	gpsdReport
 	Tag        string      `json:"tag"`
 	Device     string      `json:"device"`
 	Time       time.Time   `json:"time"`
@@ -82,7 +90,7 @@ type SKYReport struct {
 
 // GSTReport is pseudorange noise report
 type GSTReport struct {
-	Class  string    `json:"class"`
+	gpsdReport
 	Tag    string    `json:"tag"`
 	Device string    `json:"device"`
 	Time   time.Time `json:"time"`
@@ -97,7 +105,7 @@ type GSTReport struct {
 
 // ATTReport reports vehicle-attitude from the digital compass or the gyroscope
 type ATTReport struct {
-	Class       string    `json:"class"`
+	gpsdReport
 	Tag         string    `json:"tag"`
 	Device      string    `json:"device"`
 	Time        time.Time `json:"time"`
@@ -126,7 +134,7 @@ type ATTReport struct {
 
 // VERSIONReport returns version details of gpsd client
 type VERSIONReport struct {
-	Class      string `json:"class"`
+	gpsdReport
 	Release    string `json:"release"`
 	Rev        string `json:"rev"`
 	ProtoMajor int    `json:"proto_major"`
@@ -136,14 +144,14 @@ type VERSIONReport struct {
 
 // DEVICESReport lists all devices connected to the system
 type DEVICESReport struct {
-	Class   string         `json:"class"`
+	gpsdReport
 	Devices []DEVICEReport `json:"devices"`
 	Remote  string         `json:"remote"`
 }
 
 // DEVICEReport reports a state of a particular device
 type DEVICEReport struct {
-	Class     string  `json:"class"`
+	gpsdReport
 	Path      string  `json:"path"`
 	Activated string  `json:"activated"`
 	Flags     int     `json:"flags"`
@@ -159,7 +167,7 @@ type DEVICEReport struct {
 
 // PPSReport is triggered on each pulse-per-second strobe from a device
 type PPSReport struct {
-	Class      string  `json:"class"`
+	gpsdReport
 	Device     string  `json:"device"`
 	RealSec    float64 `json:"real_sec"`
 	RealMusec  float64 `json:"real_musec"`
@@ -169,7 +177,7 @@ type PPSReport struct {
 
 // TOFFReport is triggered on each PPS strobe from a device
 type TOFFReport struct {
-	Class     string  `json:"class"`
+	gpsdReport
 	Device    string  `json:"device"`
 	RealSec   float64 `json:"real_sec"`
 	RealNSec  float64 `json:"real_nsec"`
@@ -179,7 +187,7 @@ type TOFFReport struct {
 
 // ERRORReport is an error response
 type ERRORReport struct {
-	Class   string `json:"class"`
+	gpsdReport
 	Message string `json:"message"`
 }
 
